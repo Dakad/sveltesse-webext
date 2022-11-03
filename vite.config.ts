@@ -3,10 +3,10 @@
 import { dirname, relative } from 'path'
 import type { UserConfig } from 'vite'
 import { defineConfig } from 'vite'
-import Vue from '@vitejs/plugin-vue'
-import Icons from 'unplugin-icons/vite'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+
 import IconsResolver from 'unplugin-icons/resolver'
-import Components from 'unplugin-vue-components/vite'
+import Icons from 'unplugin-icons/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import UnoCSS from 'unocss/vite'
 import { isDev, port, r } from './scripts/utils'
@@ -22,35 +22,54 @@ export const sharedConfig: UserConfig = {
     __DEV__: isDev,
   },
   plugins: [
-    Vue(),
+    svelte(),
 
+    // https://github.com/antfu/unplugin-auto-import
     AutoImport({
+      include: [
+        /\.[tj]sx?$/,
+        /\.svelte$/,
+      ],
+      // global imports to register
       imports: [
-        'vue',
+        'svelte',
+        'svelte/store',
+        'svelte/transition',
         {
-          'webextension-polyfill': [
-            ['*', 'browser'],
+          '@iconify/svelte': [
+            // default imports
+            ['default', 'Icon'], // import { default as Icon } from '@iconify/svelte',
           ],
+          'webextension-polyfill': [['*', 'browser']],
         },
       ],
-      dts: r('src/auto-imports.d.ts'),
-    }),
-
-    // https://github.com/antfu/unplugin-vue-components
-    Components({
-      dirs: [r('src/components')],
-      // generate `components.d.ts` for ts support with Volar
-      dts: r('src/components.d.ts'),
       resolvers: [
         // auto import icons
         IconsResolver({
-          componentPrefix: '',
+          componentPrefix: 'Icon',
         }),
       ],
+
+      // Filepath to generate corresponding .d.ts file.
+      // Defaults to './auto-imports.d.ts' when `typescript` is installed locally.
+      dts: r('src/auto-imports.d.ts'),
     }),
 
+    // // https://github.com/antfu/unplugin-vue-components
+    // Components({
+    //   dirs: [r('src/components')],
+    //   // generate `components.d.ts` for ts support with Volar
+    //   dts: r('src/components.d.ts'),
+    //   resolvers: [
+    //     // auto import icons
+    //     IconsResolver({
+    //       componentPrefix: '',
+    //     }),
+    //   ],
+    // }),
+
     // https://github.com/antfu/unplugin-icons
-    Icons(),
+    Icons({ compiler: 'svelte' }),
 
     // https://github.com/unocss/unocss
     UnoCSS(),
@@ -66,17 +85,11 @@ export const sharedConfig: UserConfig = {
     },
   ],
   optimizeDeps: {
-    include: [
-      'vue',
-      '@vueuse/core',
-      'webextension-polyfill',
-    ],
-    exclude: [
-      'vue-demi',
-    ],
+    include: ['webextension-polyfill'],
   },
 }
 
+// https://vitejs.dev/config/
 export default defineConfig(({ command }) => ({
   ...sharedConfig,
   base: command === 'serve' ? `http://localhost:${port}/` : '/dist/',

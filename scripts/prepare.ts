@@ -26,7 +26,7 @@ async function stubIndexHtml() {
 }
 
 function writeManifest() {
-  execSync('npx esno ./scripts/manifest.ts', { stdio: 'inherit' })
+  execSync('pnpm esno ./scripts/manifest.ts', { stdio: 'inherit' })
 }
 
 writeManifest()
