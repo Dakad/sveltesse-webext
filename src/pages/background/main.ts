@@ -12,7 +12,6 @@ if (import.meta.hot) {
 // The background page will be loaded whenever the extension is active, and react to the events we set.
 // Put all the javascript code here, that you want to execute in background.
 
-
 browser.runtime.onInstalled.addListener((): void => {
   // eslint-disable-next-line no-console
   console.log('Extension installed')

@@ -1,11 +1,12 @@
 {
   "name": "sveltesse-webext",
-  "displayName": "Sveltesse WebExt",
+  "displayName": "[name]",
   "version": "0.0.1",
   "private": true,
   "packageManager": "pnpm@7.8.0",
   "description": "[description]",
   "scripts": {
+    "clear": "pnpm rimraf extension/dist extension/manifest.json extension.*",
     "dev": "pnpm run clear && cross-env NODE_ENV=development run-p dev:*",
     "dev:prepare": "esno scripts/prepare.ts",
     "dev:web": "vite",
@@ -18,9 +19,9 @@
     "pack:zip": "rimraf extension.zip && jszip-cli add extension/* -o ./extension.zip",
     "pack:crx": "pnpm crx pack extension -o ./extension.crx",
     "pack:xpi": "cross-env WEB_EXT_ARTIFACTS_DIR=./ web-ext build --source-dir ./extension --filename extension.xpi --overwrite-dest",
-    "start:chromium": "pnpm web-ext run --source-dir ./extension --target=chromium",
-    "start:firefox": "pnpm web-ext run --source-dir ./extension --target=firefox-desktop",
-    "clear": "pnpm rimraf extension/dist extension/manifest.json extension.*",
+    "web-ext-run": "pnpm web-ext run --source-dir ./extension --watch-files ./extension/dist/pages/contentScripts/index.global.js",
+    "start:chromium": "pnpm run web-ext-run --target=chromium --start-url chrome://extensions/",
+    "start:firefox": "pnpm web-ext-run --target=firefox-desktop --start-url about:debugging#/runtime/this-firefox",
     "lint": "pnpm eslint ./src/",
     "test": "pnpm vitest test",
     "coverage": "pnpm vitest run --coverage"
