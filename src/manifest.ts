@@ -27,9 +27,9 @@ export async function getManifest() {
       persistent: false,
     },
     icons: {
-      16: './assets/icon-512.png',
-      48: './assets/icon-512.png',
-      128: './assets/icon-512.png',
+      16: './assets/icon.png',
+      48: './assets/icon.png',
+      128: './assets/icon.png',
     },
     permissions: [
       'tabs',
