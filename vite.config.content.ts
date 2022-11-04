@@ -10,12 +10,12 @@ export default defineConfig({
     watch: isDev
       ? {}
       : undefined,
-    outDir: r('extension/dist/contentScripts'),
+    outDir: r('extension/dist/pages/contentScripts'),
     cssCodeSplit: false,
     emptyOutDir: false,
     sourcemap: isDev ? 'inline' : false,
     lib: {
-      entry: r('src/contentScripts/index.ts'),
+      entry: r('src/pages/contentScripts/index.ts'),
       name: packageJson.name,
       formats: ['iife'],
     },
