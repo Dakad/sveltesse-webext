@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { useToggle } from '@vueuse/core'
 import 'uno.css'
 
-const [show, toggle] = useToggle(false)
 </script>
 
-<template>
+<main>
   <div class="fixed right-0 bottom-0 m-5 z-100 flex font-sans select-none leading-1em">
     <div
       class="bg-white text-gray-800 rounded-full shadow w-max h-min"
@@ -19,9 +17,8 @@ const [show, toggle] = useToggle(false)
     <div
       class="flex w-10 h-10 rounded-full shadow cursor-pointer"
       bg="teal-600 hover:teal-700"
-      @click="toggle()"
     >
-      <pixelarticons-power class="block m-auto text-white text-lg" />
+      <Icon icon="pixelarticons:zap" inline={true} />
     </div>
   </div>
-</template>
+</main>
