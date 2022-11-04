@@ -1,9 +1,9 @@
 import '~/styles'
-import App from "./Popup.svelte";
+import App from './Popup.svelte'
 
 const app = new App({
-  target: document.getElementById("app"),
-  props: {}
-});
+  target: document.getElementById('app'),
+  props: {},
+})
 
-export default app;
+export default app

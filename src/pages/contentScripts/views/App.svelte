@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 import 'uno.css'
 
 </script>
@@ -12,7 +12,7 @@ import 'uno.css'
       transition="opacity duration-300"
       :class="show ? 'opacity-100' : 'opacity-0'"
     >
-      Vitesse WebExt
+      Sveltesse WebExt
     </div>
     <div
       class="flex w-10 h-10 rounded-full shadow cursor-pointer"

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { onMessage } from 'webext-bridge'
-// import App from './views/App.svelte'
+import App from './views/App.svelte'
 
 // The content script has direct access to the current web page.
 // Put all the javascript code here, that you want to execute after page load.

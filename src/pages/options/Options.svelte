@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 </script>
 
 <main class="px-4 py-10 text-center text-gray-700 dark:text-gray-200">
@@ -9,6 +9,6 @@
   </p>
 
   <div class="mt-4">
-    Powered by Vite <Icon icon="gridicons:offline" inline={true} class="align-middle inline-block" height="2.9em" style="color: orange" />
+    Powered by Svelte on Vite <Icon icon="gridicons:offline" inline={true} class="align-middle inline-block" height="2.9em" style="color: orange" />
   </div>
 </main>
