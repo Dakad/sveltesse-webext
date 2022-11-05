@@ -53,19 +53,6 @@ export const sharedConfig: UserConfig = {
       dts: r('src/auto-imports.d.ts'),
     }),
 
-    // // https://github.com/antfu/unplugin-vue-components
-    // Components({
-    //   dirs: [r('src/components')],
-    //   // generate `components.d.ts` for ts support with Volar
-    //   dts: r('src/components.d.ts'),
-    //   resolvers: [
-    //     // auto import icons
-    //     IconsResolver({
-    //       componentPrefix: '',
-    //     }),
-    //   ],
-    // }),
-
     // https://github.com/antfu/unplugin-icons
     Icons({ compiler: 'svelte' }),
 
