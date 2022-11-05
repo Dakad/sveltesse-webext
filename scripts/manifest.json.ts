@@ -49,14 +49,15 @@ export async function getManifest() {
     },
     permissions: [
       'storage',
+      'tabs',
       'activeTab',
       'http://*/',
       'https://*/',
     ],
-    // content_scripts: [{
-    //   matches: ['http://*/*', 'https://*/*'],
-    //   js: ['./dist/pages/contentScripts/index.global.js'],
-    // }],
+    content_scripts: [{
+      matches: ['http://*/*', 'https://*/*'],
+      js: ['./dist/pages/contentScripts/index.global.js'],
+    }],
     web_accessible_resources: [
       'dist/pages/contentScripts/style.css',
       'dist/pages/contentScripts/index.global.js',
@@ -67,7 +68,7 @@ export async function getManifest() {
     // for content script, as browsers will cache them for each reload,
     // we use a background script to always inject the latest version
     // see src/pages/background/contentScriptHMR.ts
-    // delete manifest.content_scripts
+    delete manifest.content_scripts
 
     manifest.permissions?.push('webNavigation')
 

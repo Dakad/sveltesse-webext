@@ -22,8 +22,6 @@ export const sharedConfig: UserConfig = {
     __DEV__: isDev,
   },
   plugins: [
-    svelte(),
-
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
       include: [
@@ -73,6 +71,8 @@ export const sharedConfig: UserConfig = {
 
     // https://github.com/unocss/unocss
     UnoCSS(),
+
+    svelte(),
 
     // rewrite assets to use relative path
     {

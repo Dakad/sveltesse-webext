@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import 'uno.css'
 import { onMessage } from 'webext-bridge'
 import App from './views/App.svelte'
 
@@ -11,19 +12,19 @@ import App from './views/App.svelte'
 
   // communication example: send previous tab title from background page
   onMessage('tab-prev', ({ data }) => {
-    console.log(`[sveltesse-webext] Navigate from page ""`)
+    console.log(`[sveltesse-webext] Navigate from page "${data}"`)
   })
 
   // mount component to context window
-  const container = document.createElement('div')
-  const root = document.createElement('div')
   const styleEl = document.createElement('link')
-  const shadowDOM = container.attachShadow?.({ mode: __DEV__ ? 'open' : 'closed' }) || container
   styleEl.setAttribute('rel', 'stylesheet')
   styleEl.setAttribute('href', browser.runtime.getURL('dist/pages/contentScripts/style.css'))
-  shadowDOM.appendChild(styleEl)
-  shadowDOM.appendChild(root)
+
+  const container = document.createElement('div')
+  container.classList.add('_sveltesse__container')
+  document.getElementsByTagName('head')[0].appendChild(styleEl)
   document.body.appendChild(container)
 
-
+  /* eslint-disable no-new */
+  new App({ target: container })
 })()
