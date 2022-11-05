@@ -17,11 +17,16 @@ async function stubIndexHtml() {
   for (const view of pages) {
     await fs.ensureDir(r(`extension/dist/pages/${view}`))
     let data = await fs.readFile(r(`src/pages/${view}/index.html`), 'utf-8')
-    data = data
-      .replace('"./main.ts"', `"http://localhost:${port}/pages/${view}/main.ts"`)
+    data = data.replace('"./main.ts"', `"http://localhost:${port}/pages/${view}/main.ts"`)
     await fs.writeFile(r(`extension/dist/pages/${view}/index.html`), data, 'utf-8')
-    log('PRE', `stub ${view}`)
+    log('PRE', `stub pages/${view}`)
   }
+}
+
+async function copyAssetsforManifest() {
+  await fs.emptyDir(r('extension/assets'))
+  await fs.copy(r('src/assets'), r('extension/assets'))
+  log('PRE', `Copy src/assets to extension/assets`)
 }
 
 function writeManifest() {
@@ -29,15 +34,16 @@ function writeManifest() {
 }
 
 writeManifest()
+copyAssetsforManifest()
 
 if (isDev) {
   stubIndexHtml()
+
   chokidar.watch(r('src/**/*.html'))
-    .on('change', () => {
-      stubIndexHtml()
-    })
+    .on('change', stubIndexHtml)
+  log('PRE', 'Watching change src/**/*.html')
+
   chokidar.watch([r('scripts/manifest.json.ts'), r('package.json')])
-    .on('change', () => {
-      writeManifest()
-    })
+    .on('change', () => writeManifest())
+  log('PRE', 'Watching change on src/manifest.jon.ts and packagee.json')
 }
