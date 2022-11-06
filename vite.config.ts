@@ -80,6 +80,7 @@ export const sharedConfig: UserConfig = {
 export default defineConfig(({ command }) => ({
   ...sharedConfig,
   base: command === 'serve' ? `http://localhost:${port}/` : '/dist/',
+  plugins: sharedConfig.plugins,
   server: {
     port,
     hmr: {
@@ -102,9 +103,16 @@ export default defineConfig(({ command }) => ({
       },
     },
   },
-  plugins: sharedConfig.plugins,
   test: {
+    // Had  to add the '..' because the root path for vite is 'src/'
+    include: ['**/__tests__/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     globals: true,
     environment: 'jsdom',
+    resolveSnapshotPath: (testPath, snapExtension) => testPath + snapExtension,
+    coverage: {
+      provider: 'c8',
+      reporter: ['text'],
+      reportsDirectory: r('src/__tests__/__coverage__'),
+    },
   },
 }))
