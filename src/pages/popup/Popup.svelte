@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Logo from '~/components/Logo.svelte'
+  import Logo from '@components/Logo.svelte'
 
   function openOptionsPage() {
     browser.runtime.openOptionsPage()
@@ -15,7 +15,7 @@
 
 <main class="w-[300px] px-4 py-5 text-center text-gray-700">
   <Logo />
-  <div>Popup</div>
+  <h1>Popup</h1>
   <p class="mt-2 opacity-50">
     This is the popup page
   </p>
