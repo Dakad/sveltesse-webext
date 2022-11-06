@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Icon from '@iconify/svelte'
   import Logo from '@components/Logo.svelte'
 
   function openOptionsPage() {

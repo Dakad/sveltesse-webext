@@ -5,7 +5,6 @@ import type { UserConfig } from 'vite'
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 
-import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import UnoCSS from 'unocss/vite'
@@ -37,18 +36,8 @@ export const sharedConfig: UserConfig = {
         'svelte/store',
         'svelte/transition',
         {
-          '@iconify/svelte': [
-            // default imports
-            ['default', 'Icon'], // import { default as Icon } from '@iconify/svelte',
-          ],
           'webextension-polyfill': [['*', 'browser']],
         },
-      ],
-      resolvers: [
-        // auto import icons
-        IconsResolver({
-          componentPrefix: 'Icon',
-        }),
       ],
 
       // Filepath to generate corresponding .d.ts file.
