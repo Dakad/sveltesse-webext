@@ -19,12 +19,20 @@
     "pack:zip": "rimraf extension.zip && jszip-cli add extension/* -o ./extension.zip",
     "pack:crx": "pnpm crx pack extension -o ./extension.crx",
     "pack:xpi": "cross-env WEB_EXT_ARTIFACTS_DIR=./ web-ext build --source-dir ./extension --filename extension.xpi --overwrite-dest",
-    "web-ext-run": "pnpm web-ext run --source-dir ./extension --watch-files ./extension/dist/pages/contentScripts/index.global.js",
-    "start:chromium": "pnpm run web-ext-run --target=chromium --start-url chrome://extensions/",
-    "start:firefox": "pnpm web-ext-run --target=firefox-desktop --start-url about:debugging#/runtime/this-firefox",
+    "start:chromium": "pnpm web-ext run --target=chromium --start-url chrome://extensions/",
+    "start:firefox": "pnpm web-ext run --target=firefox-desktop --start-url about:debugging#/runtime/this-firefox",
     "lint": "pnpm eslint ./src/",
     "test": "pnpm vitest test",
     "test:coverage": "pnpm vitest run --coverage"
+  },
+  "webExt": {
+    "verbose": false,
+    "sourceDir": "./extension",
+    "run": {
+      "keepProfileChanges": true,
+      "devtools": true,
+      "firefoxPreview": ["mv3"]
+    }
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.27.0",
