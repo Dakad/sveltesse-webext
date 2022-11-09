@@ -3,10 +3,9 @@
 import { dirname, relative } from 'path'
 import type { UserConfig } from 'vite'
 import { defineConfig } from 'vite'
-import Vue from '@vitejs/plugin-vue'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+
 import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver'
-import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import UnoCSS from 'unocss/vite'
 import { isDev, port, r } from './scripts/utils'
@@ -16,44 +15,43 @@ export const sharedConfig: UserConfig = {
   resolve: {
     alias: {
       '~/': `${r('src')}/`,
+      '@src/': `${r('src')}/`,
+      '@components/': `${r('src/components')}/`,
+      '@tests/': `${r('src/__tests__')}/`,
     },
   },
   define: {
     __DEV__: isDev,
   },
   plugins: [
-    Vue(),
-
+    // https://github.com/antfu/unplugin-auto-import
     AutoImport({
+      include: [
+        /\.[tj]sx?$/,
+        /\.svelte$/,
+      ],
+      // global imports to register
       imports: [
-        'vue',
+        'svelte',
+        'svelte/store',
+        'svelte/transition',
         {
-          'webextension-polyfill': [
-            ['*', 'browser'],
-          ],
+          'webextension-polyfill': [['*', 'browser']],
         },
       ],
+
+      // Filepath to generate corresponding .d.ts file.
+      // Defaults to './auto-imports.d.ts' when `typescript` is installed locally.
       dts: r('src/auto-imports.d.ts'),
     }),
 
-    // https://github.com/antfu/unplugin-vue-components
-    Components({
-      dirs: [r('src/components')],
-      // generate `components.d.ts` for ts support with Volar
-      dts: r('src/components.d.ts'),
-      resolvers: [
-        // auto import icons
-        IconsResolver({
-          componentPrefix: '',
-        }),
-      ],
-    }),
-
     // https://github.com/antfu/unplugin-icons
-    Icons(),
+    Icons({ compiler: 'svelte' }),
 
     // https://github.com/unocss/unocss
     UnoCSS(),
+
+    svelte(),
 
     // rewrite assets to use relative path
     {
@@ -66,20 +64,15 @@ export const sharedConfig: UserConfig = {
     },
   ],
   optimizeDeps: {
-    include: [
-      'vue',
-      '@vueuse/core',
-      'webextension-polyfill',
-    ],
-    exclude: [
-      'vue-demi',
-    ],
+    include: ['webextension-polyfill'],
   },
 }
 
+// https://vitejs.dev/config/
 export default defineConfig(({ command }) => ({
   ...sharedConfig,
   base: command === 'serve' ? `http://localhost:${port}/` : '/dist/',
+  plugins: sharedConfig.plugins,
   server: {
     port,
     hmr: {
@@ -96,15 +89,22 @@ export default defineConfig(({ command }) => ({
     },
     rollupOptions: {
       input: {
-        background: r('src/background/index.html'),
-        options: r('src/options/index.html'),
-        popup: r('src/popup/index.html'),
+        background: r('src/pages/background/index.html'),
+        options: r('src/pages/options/index.html'),
+        popup: r('src/pages/popup/index.html'),
       },
     },
   },
-  plugins: sharedConfig.plugins,
   test: {
+    // Had  to add the '..' because the root path for vite is 'src/'
+    include: ['**/__tests__/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     globals: true,
     environment: 'jsdom',
+    resolveSnapshotPath: (testPath, snapExtension) => testPath + snapExtension,
+    coverage: {
+      provider: 'c8',
+      reporter: ['text'],
+      reportsDirectory: r('src/__tests__/__coverage__'),
+    },
   },
 }))

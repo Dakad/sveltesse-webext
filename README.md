@@ -14,13 +14,13 @@ A [Vite](https://vitejs.dev/) powered WebExtension ([Chrome](https://developer.c
 ## Features
 
 - ⚡️ **Instant HMR** - use **Vite** on dev (no more refresh!)
-- 🥝 Vue 3 - Composition API, [`<script setup>` syntax](https://github.com/vuejs/rfcs/blob/master/active-rfcs/0040-script-setup.md) and more!
+- 🏎 Svelte - WebApp Framework. 
 - 💬 Effortless communications - powered by [`webext-bridge`](https://github.com/antfu/webext-bridge) and [VueUse](https://github.com/antfu/vueuse) storage
 - 🌈 [UnoCSS](https://github.com/unocss/unocss) - The instant on-demand Atomic CSS engine.
 - 🦾 [TypeScript](https://www.typescriptlang.org/) - type safe
-- 📦 [Components auto importing](./src/components)
+- 📦 [Components auto importing](./src/components) - Auto import components on-demand for Vite
 - 🌟 [Icons](./src/components) - Access to icons from any iconset directly
-- 🖥 Content Script - Use Vue even in content script
+- 🖥 Content Script - Use Svelte even in content script
 - 🌍 WebExtension - isomorphic extension for Chrome, Firefox, and others
 - 📃 Dynamic `manifest.json` with full type support
 
@@ -36,20 +36,16 @@ A [Vite](https://vitejs.dev/) powered WebExtension ([Chrome](https://developer.c
 - [`unplugin-auto-import`](https://github.com/antfu/unplugin-auto-import) - Directly use `browser` and Vue Composition API without importing
 - [`unplugin-vue-components`](https://github.com/antfu/vite-plugin-components) - components auto import
 - [`unplugin-icons`](https://github.com/antfu/unplugin-icons) - icons as components
-  - [Iconify](https://iconify.design) - use icons from any icon sets [🔍Icônes](https://icones.netlify.app/)
-
-### Vue Plugins
-
-- [VueUse](https://github.com/antfu/vueuse) - collection of useful composition APIs
+- [Iconify](https://iconify.design) - use icons from any icon sets [🔍Icônes](https://icones.netlify.app/)
 
 ### UI Frameworks
 
-- [Windi CSS](https://github.com/unocss/unocss) - the instant on-demand Atomic CSS engine.
+- [UnoCSS](https://github.com/unocss/unocss) - the instant on-demand Atomic CSS engine.
 
 ### Coding Style
 
-- Use Composition API with [`<script setup>` SFC syntax](https://github.com/vuejs/rfcs/pull/227)
-- [ESLint](https://eslint.org/) with [@antfu/eslint-config](https://github.com/antfu/eslint-config), single quotes, no semi
+- [Use Svelte with typescrypt](https://svelte.dev/blog/svelte-and-typescript)
+- [ESLint](https://eslint.org/) with [@antfu/eslint-config](https://github.com/antfu/eslint-config)
 
 ### Dev tools
 
@@ -63,7 +59,7 @@ A [Vite](https://vitejs.dev/) powered WebExtension ([Chrome](https://developer.c
 
 ### GitHub Template
 
-[Create a repo from this template on GitHub](https://github.com/antfu/vitesse-webext/generate).
+[Create a repo from this template on GitHub](https://github.com/Dakad/sveltesse-webext/generate).
 
 ### Clone to local
 
@@ -72,9 +68,9 @@ If you prefer to do it manually with the cleaner git history
 > If you don't have pnpm installed, run: npm install -g pnpm
 
 ```bash
-npx degit antfu/vitesse-webext my-webext
+pnpx degit antfu/vitesse-webext my-webext
 cd my-webext
-pnpm i
+pnpm install
 ```
 
 ## Usage
@@ -96,7 +92,7 @@ pnpm i
 ### Development
 
 ```bash
-pnpm dev
+pnpm run dev
 ```
 
 Then **load extension in browser with the `extension/` folder**.
@@ -116,17 +112,11 @@ pnpm start:firefox
 To build the extension, run
 
 ```bash
-pnpm build
+pnpm  run build
 ```
 
 And then pack files under `extension`, you can upload `extension.crx` or `extension.xpi` to appropriate extension store.
 
 ## Credits
 
-[![Volta](https://user-images.githubusercontent.com/904724/195351818-9e826ea9-12a0-4b06-8274-352743cd2047.png)](https://volta.net)
-
-This template is originally made for the [volta.net](https://volta.net) browser extension.
-
-## Variations
-
-This is a variant of [Vitesse](https://github.com/antfu/vitesse), check out the [full variations list](https://github.com/antfu/vitesse#variations).
+This is a forked & variant of [Vitesse](https://github.com/antfu/vitesse), check out the [full variations list](https://github.com/antfu/vitesse#variations).
